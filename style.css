@@ -37,12 +37,23 @@ header {
 }
   
 
-nav a{
-    margin-left: 1rem;
+nav {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+  }
+  
+  nav a {
     text-decoration: none;
-    color: #1e1e1e;
+    color: black;
     font-weight: 600;
-}
+  }
+  
+  nav a.active {
+    font-weight: 600;
+  }
 
 nav a:hover{
     color: #0073e6;
@@ -102,17 +113,45 @@ footer p {
     margin: 0.2rem 0;
 }
 
-#projects {
-    padding: 4rem 0;
-    min-height: 300px;
-    width: 100%;
-  }
+.project-box {
+    background-color: #1f1f1f;
+    color: #f0f0f0;
+    padding: 2rem;
+    max-width: 700px;
+    margin: 2rem auto;
+    border-left: 2px solid #f0f0f0;
+    border-right: 2px solid #f0f0f0;
+    font-family: 'Inter', sans-serif;
+    border-radius: 6px;
+}
   
-  .project-list {
-    max-width: 800px;
-    margin: 0 auto;
+.project-box h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
     text-align: left;
-    padding: 1rem;
-  }
+}
+  
+.project-box hr {
+    border: none;
+    border-top: 2px dashed #999;
+    margin-bottom: 1rem;
+}
+  
+.project-list {
+    list-style: none;
+    padding: 0;
+}
+  
+.project-list li {
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+  
+.project-list .check {
+    color: #4caf50;
+    font-weight: bold;
+    margin-right: 0.4rem;
+}
   
   
