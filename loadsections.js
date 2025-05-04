@@ -8,3 +8,5 @@ function loadSection(id, file) {
 }
 loadSection('aboutme', 'aboutme.html');
 loadSection('projects', 'projects.html');
+
+

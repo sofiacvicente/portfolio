@@ -2,22 +2,40 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-
-body{
-    font-family: 'Inter', sans-serif;
-    background-color: #ffffff;
-    color: #333;
-    padding: 2rem;
-    text-align: center;
 }
 
-header{
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+}
+  
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center; /* Centraliza tudo */
+    text-align: center;
+}
+  
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+header {
+    width: 100%;
+    padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 3rem;
+    box-sizing: border-box;
 }
+  
 
 nav a{
     margin-left: 1rem;
@@ -30,6 +48,14 @@ nav a:hover{
     color: #0073e6;
 }
 
+#language-select {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-left: 1rem;
+  }
+  
 .hero-pic{
     width: 140px;
     height: 140px;
@@ -56,19 +82,23 @@ p {
     justify-content: center;
     gap: 20px;
   }
-
-.socials a {
+  
+  .socials a {
     font-size: 1.8rem;
     color: #333;
     transition: color 0.3s ease;
-}
+  }
   
-.socials a:hover {
-    color: #0073e6;
-}
+  .socials a:hover {
+    color: #1b83ba;
+  }
   
 footer {
-    margin-top: 3rem;
-    font-size: 0.85rem;
-    color: #777;
-}
+    text-align: center;
+    padding: 1rem 0;
+  }
+  
+  footer p {
+    margin: 0.2rem 0;
+  }
+  
