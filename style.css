@@ -50,11 +50,17 @@ p {
     margin: 0.5rem 0 1.5rem;
 }
   
+.socials {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
 .socials a {
-    margin: 0 0.5rem;
-    color: #1e1e1e;
-    font-size: 1.5rem;
-    transition: color 0.2s;
+    font-size: 1.8rem;
+    color: #333;
+    transition: color 0.3s ease;
 }
   
 .socials a:hover {
