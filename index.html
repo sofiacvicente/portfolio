@@ -1,98 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Sofia Vicente | Portfolio</title>
-        <link rel="stylesheet" href="style.css" />
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>      
-        
-    </head>
-    <body>
-        <header>
-            <div class="logo"> The Portfolio</div>
-            <nav>
-                <a href="#" data-i18n="home">Home</a>
-                <a href="projects.html" data-i18n="projects">Projects</a>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Website | Sofia</title>
+  <link rel="stylesheet" href="style.css">
+  <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+</head>
 
-            </nav>
-            <select id="language-select">
-                <option value="en">English</option>
-                <option value="pt">Português</option>
-              </select>
-        </header>
+<body>
+  <header class="header" >
+    <a href="#" class="logo">Portfolio</a>
 
-        <main>
-            <img class="hero-pic" src="sofia.jpg" alt="Sofia Cardoso Vicente" />
-            <h1 data-i18n="name">Sofia Vicente</h1>
-            <p data-i18n="description">Bachelor's Student in Electrical and Computer Engineering</p>
+    <nav class="navbar">
+        <a href="#" style="--i:12;" class="active">Home</a>
+        <a href="#"style="--i:13;">About me</a>
+        <a href="#" style="--i:14;">Projects</a> 
+        <a href="#" style="--i:15;">MKT</a>
+    </nav>
 
-            <div class="socials">
-                <div class="socials">
-                    <a href="mailto:sofiacvicente@tecnico.ulisboa.pt" target="_blank" aria-label="Email">
-                      <i class="fas fa-envelope"></i>
-                    </a>
-                    <a href="https://github.com/sofiacvicente" target="_blank" aria-label="GitHub">
-                      <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://linkedin.com/in/sofiacvicente" target="_blank" aria-label="LinkedIn">
-                      <i class="fab fa-linkedin"></i>
-                    </a>
-                  </div>
-                  
-            </div>
-        </main>
+    <div class="toggle">
+      <i class='bx bx-moon-crater' toggle-icon ></i> 
+    </div>
+  </header>
 
-        <footer>
-            <p data-i18n="footer1">© 2025 Sofia Vicente</p>
-            <p data-i18n="footer2">All Rights Reserved.</p>
-        </footer>
-          
+  <section class="home">
+    <div class="home-content">
+      <h3>Hello, I'm </h3>
+      <h1>Sofia Vicente</h1>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis provident expedita quidem delectus quos officia blanditiis eaque!</p>
+      
+      <div class="social-media">
+        <a href="#" style="--i:7;"><i class='bx  bx-air'></i> </a>
+        <a href="#" style="--i:8;"><i class='bx  bx-calendar-alt'></i> </a>
+        <a href="#" style="--i:9;"><i class='bx bx-unlink'></i> </a>
+        <a href="#" style="--i:10;"><i class='bx bx-database-alt'></i> </a>
+      </div>
 
-        <div id="project_list"></div>
+      <a href="#" class="btn">Download CV</a>
+    </div>
 
-        <script>
-            const translations = {
-              en: {
-                name: "Sofia Cardoso Vicente",
-                description: "Bachelor's Student in Electrical and Computer Engineering",
-                home: "Home",
-                projects: "Projects",
-                footer1: "©2025 Sofia Cardoso Vicente",
-                footer2: "All Rights Reserved."
-              },
-              pt: {
-                name: "Sofia Cardoso Vicente",
-                description: "Estudante de Licenciatura em Engenharia Eletrotécnica e de Computadores",
-                home: "Início",
-                projects: "Projetos",
-                footer1: "©2025 Sofia Cardoso Vicente",
-                footer2: "Todos os direitos reservados."
-              }
-            };
-          
-            const languageSelect = document.getElementById("language-select");
-          
-            function updateLanguage(lang) {
-              document.querySelectorAll("[data-i18n]").forEach(el => {
-                const key = el.getAttribute("data-i18n");
-                if (translations[lang][key]) {
-                  el.textContent = translations[lang][key];
-                }
-              });
-            }
-          
-            languageSelect.addEventListener("change", (e) => {
-              updateLanguage(e.target.value);
-            });
-          
-            updateLanguage("en"); // idioma inicial
-          </script>
-          
-          
-    </body>
-</html>
+    <div class="profession-container">
+      <div class="profession-box">
+        <div class="profession" style="--i:0;">
+            <i class='bx bx-code-alt'></i> 
+            <h3>Web Developer</h3>
+        </div>
+        <div class="profession" style="--i:1;">
+            <i class='bx  bx-camera-alt'></i> 
+            <h3>Photographer</h3>
+        </div>
+        <div class="profession" style="--i:2;">
+            <i class='bx  bx-palette'></i>  
+            <h3>Web Designer</h3>
+        </div>
+        <div class="profession" style="--i:3;">
+            <i class='bx  bx-camcoder'></i>  
+            <h3>Videographer</h3>
+        </div>
+
+        <div class="circle"></div>
+
+      </div>
+
+      <div class="overlay"></div>
+
+    </div>
+
+    <div class="home-img">
+      <img src="sofia-removebg.png" alt="">
+    </div>
+
+  </section>
+  
+  <script src="script.js"></script>
+
+</body>
