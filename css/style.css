@@ -110,7 +110,7 @@ nav.visible {
 #hero-bg {
   position: absolute;
   inset: 0;
-  background: #b8b8b8 url('../assets/IMG_2143.png') center/cover no-repeat;
+  background: #b8b8b8 url('../assets/bgimage2.png') center/cover no-repeat;
 }
 
 .hero-phrase {
