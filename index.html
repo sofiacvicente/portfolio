@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>S.V.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/panels.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a class="nav-logo" onclick="closeAbout()">S.V.</a>
+    <ul class="nav-links">
+      <li><a href="#" onclick="openAbout(); return false;">About</a></li>
+      <li><a href="#" onclick="openAbout(); openPanel('projects'); return false;">Projects</a></li>
+      <li><a href="#" onclick="openAbout(); openPanel('news'); return false;">News</a></li>
+      <li><a href="#" onclick="openAbout(); openPanel('contact'); return false;">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- CLOSE BUTTON -->
+  <button class="close-btn" id="close-btn" onclick="closeAbout()">← back</button>
+
+  <!-- HERO -->
+  <div id="hero">
+    <div id="hero-bg"></div>
+    <p class="hero-phrase">
+      <span class="name-link" onclick="openAbout()">Sofia Vicente</span> is a creative founder<br>
+      based in Lisbon.
+    </p>
+  </div>
+
+  <!-- ABOUT PAGE -->
+  <div id="about-page">
+    <div class="about-inner">
+      <div class="bio" id="bio-container"></div>
+    </div>
+  </div>
+  <!--a href="assets/CV_Sofia_Vicente_.pdf" download class="cv-download" id="cv-btn">Download my CV</a>-->
+
+  <script src="js/main.js"></script>
+</body>
+</html>
