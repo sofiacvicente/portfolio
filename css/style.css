@@ -201,6 +201,12 @@ nav.visible {
 
 .keyword:hover { color: var(--accent); }
 
+a.keyword {
+  color: inherit;
+  text-decoration-color: var(--fg);
+}
+a.keyword:hover { color: var(--fg); }
+
 @media (max-width: 600px) {
   .nav-links { display: none; }
 }

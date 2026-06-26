@@ -14,19 +14,15 @@ const BIO = [
     panel: null
   },
   {
-    text: 'She finds clarity where others find chaos.',
-    keyword: null,
-    panel: null
-  },
-  {
-    text: 'She has led teams and driven initiatives through {{JUNITEC}}, the Junior Enterprise of IST.',
-    keyword: 'JUNITEC',
-    panel: 'junitec'
-  },
-  {
     text: 'She has built {{projects}} ranging from assistive technology to data-driven applications.',
     keyword: 'projects',
     panel: 'projects'
+  },
+  {
+    text: 'She reflects both the engineer and the creative thinker side in her {{portfolio}}.',
+    keyword: 'portfolio',
+    panel: null,
+    href: 'portfolio.html'
   },
   {
     text: 'She has been featured in {{news and publications}}.',
@@ -52,10 +48,10 @@ async function buildBio() {
     if (item.keyword) {
       const escaped = item.keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const parts = item.text.split(`{{${item.keyword}}}`);
-      line.innerHTML =
-        parts[0] +
-        `<span class="keyword" onclick="openPanel('${item.panel}')">${item.keyword}</span>` +
-        parts[1];
+      const link = item.href
+        ? `<a class="keyword" href="${item.href}">${item.keyword}</a>`
+        : `<span class="keyword" onclick="openPanel('${item.panel}')">${item.keyword}</span>`;
+      line.innerHTML = parts[0] + link + parts[1];
     } else {
       line.textContent = item.text;
     }
@@ -159,4 +155,9 @@ window.addEventListener('popstate', () => {
 });
 
 // ── Init ──────────────────────────────────────────
-buildBio();
+buildBio().then(() => {
+  if (window.location.hash === '#about') {
+    openAbout();
+    history.replaceState({ page: 'about' }, '', window.location.pathname);
+  }
+});

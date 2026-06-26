@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — S.V.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/portfolio.css" />
+</head>
+<body>
+
+  <a href="index.html#about" class="back-btn">← back</a>
+
+    <!-- ── HERO ── -->
+    <section class="hero-section">
+      <video class="hero-video" src="assets/hero-bg.mp4" autoplay muted loop playsinline></video>
+      <div class="hero-overlay"></div>
+      <span class="hs-letter" style="top:18%;left:3%;font-size:clamp(3rem,6.5vw,7.5rem);" data-final="./">/</span>
+      <span class="hs-letter" style="top:16%;left:13%;font-size:clamp(3rem,7vw,8rem);" data-final="S">S</span>
+      <span class="hs-letter" style="top:16%;left:28%;font-size:clamp(3rem,6.5vw,7.5rem);" data-final="IA">IA</span>
+      <div class="hs-tagline">ece student<br>WITH A PASSION FOR <span id="tagline-cycle">MARKETING.</span></div>
+      <span class="hs-letter" style="top:42%;left:13%;font-size:clamp(3rem,7vw,8rem);" data-final="OF">OF</span>
+      <span class="hs-letter" style="top:40%;right:3%;font-size:clamp(2.5rem,6.5vw,7.5rem);" data-final="VIC_">VIC_</span>
+      <span class="hs-letter" style="top:62%;right:3%;font-size:clamp(2.5rem,6.5vw,7.5rem);" data-final="ENTE">ENTE</span>
+      <h1 class="hs-title">Port<span class="hs-title-blur">folio.</span></h1>
+    </section>
+
+  <div class="portfolio-wrap">
+
+    <!-- ── CAMERA + SEARCH ── -->
+    <section class="camera-section">
+      <div class="camera-wrap">
+        <img class="camera-img" src="assets/camera.png" alt="camera" />
+        <div class="camera-screen" onclick="openModal('assets/showreel.mp4')">
+          <img src="assets/showreel-thumb.jpg" alt="" onerror="this.style.display='none'" />
+          <div class="screen-play">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="hero-text">
+        <p class="whats-this">what's this?</p>
+        <div class="search-bar">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <span class="search-name">A collection of moving ideas...<span class="search-cursor"></span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FOLDERS ── -->
+    <section class="folders-section">
+      <p class="section-label">./Navigate</p>
+      <div class="folders-grid">
+        <a href="#works" class="folder">
+          <div class="folder-icon"></div>
+          <span class="folder-name">./works</span>
+        </a>
+        <div class="folder folder-radial" onclick="toggleRadial(this)">
+          <div class="folder-icon"></div>
+          <span class="folder-name">./skills</span>
+          <div class="folder-items">
+            <span class="folder-item" onclick="zoomItem(this, event)">Editing</span>
+            <span class="folder-item" onclick="zoomItem(this, event)">Motion</span>
+            <span class="folder-item" onclick="zoomItem(this, event)">Color</span>
+            <span class="folder-item" onclick="zoomItem(this, event)">Storytelling</span>
+            <span class="folder-item" onclick="zoomItem(this, event)">Strategy</span>
+            <span class="folder-item" onclick="zoomItem(this, event)">Photography</span>
+          </div>
+        </div>
+        <div class="folder folder-radial" onclick="toggleRadial(this)">
+          <div class="folder-icon"></div>
+          <span class="folder-name">./software</span>
+          <div class="folder-items">
+            <span class="folder-item folder-item-logo" onclick="zoomItem(this, event)" style="background:#2a1a3e;border-color:#9f6ff7;"><span style="color:#9f6ff7;font-weight:600;font-size:0.75rem;">Pr</span><span class="logo-name">Premiere Pro</span></span>
+            <span class="folder-item folder-item-logo" onclick="zoomItem(this, event)" style="background:#1a2a3e;border-color:#9ab8c2;"><span style="color:#9ab8c2;font-weight:600;font-size:0.75rem;">Ae</span><span class="logo-name">After Effects</span></span>
+            <span class="folder-item folder-item-logo" onclick="zoomItem(this, event)" style="background:#1a1a1a;border-color:#e05a3a;"><span style="color:#e05a3a;font-weight:600;font-size:0.75rem;">Da</span><span class="logo-name">DaVinci Resolve</span></span>
+            <span class="folder-item folder-item-logo" onclick="zoomItem(this, event)" style="background:#2a1a00;border-color:#ff9a00;"><span style="color:#ff9a00;font-weight:600;font-size:0.75rem;">Ai</span><span class="logo-name">Illustrator</span></span>
+            <span class="folder-item folder-item-logo" onclick="zoomItem(this, event)" style="background:#001e36;border-color:#31a8ff;"><span style="color:#31a8ff;font-weight:600;font-size:0.75rem;">Ps</span><span class="logo-name">Photoshop</span></span>
+            <span class="folder-item folder-item-logo" onclick="zoomItem(this, event)" style="background:#1a1a1a;border-color:#a259ff;"><span style="color:#a259ff;font-weight:600;font-size:0.75rem;">Fg</span><span class="logo-name">Figma</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── WORKS ── -->
+    <section class="works-section" id="works">
+
+      <div class="carousel-section">
+        <p class="section-label">./works/Junitec</p>
+        <div class="project-intro">
+          <div class="project-left">
+            <span class="project-number">01.</span>
+            <div class="project-desc">
+              <h2 class="project-title">JUNITEC</h2>
+              <p>JUNITEC is the Junior Enterprise of Instituto Superior Técnico, bringing together students who develop consulting, technology, and innovation projects for companies and organisations. 
+                It provides a space where academic knowledge is transformed into real-world experience, entrepreneurship, and impact</p>
+              <a href="https://www.junitec.pt/" class="learn-more" target="_blank" rel="noopener noreferrer">Learn more</a>
+            </div>
+          </div>
+          <img class="project-cover" src="assets/junitec-cover.jpg" alt="" onerror="this.style.background='#111';this.style.aspectRatio='16/9'" />
+        </div>
+        <div class="carousel-track">
+          <button class="carousel-btn" onclick="scrollCarousel('junitec', -1)">←</button>
+          <div class="carousel" id="junitec">
+            <div class="work-item" data-link="https://www.instagram.com/reel/DYSevYIiYnv/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" data-video="assets/SUMMER_WITH_IMPACT.mp4">
+              <img src="assets/REEL_SIP.png" alt="" onerror="this.style.background='#111'" />
+              <div class="work-overlay"><span class="work-title">Campanha de Responsabilidade Social</span></div>
+            </div>
+            <div class="work-item" data-link="https://www.instagram.com/reel/DP6y16IDP5i/?utm_source=ig_web_copy_link" data-video="assets/exbo_reel.mp4">
+              <img src="assets/exboreel.png" alt="" onerror="this.style.background='#111'" />
+              <div class="work-overlay"><span class="work-title">Exbo Reel 2025</span></div>
+            </div>
+            <div class="work-item" data-link="https://www.instagram.com/reel/DXKaidhjMEv/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" data-video="assets/winterconference.mp4">
+              <img src="assets/winterconference.png" alt="" onerror="this.style.background='#111'" />
+              <div class="work-overlay"><span class="work-title">Winter Conference 2026</span></div>
+            </div>
+            <div class="work-item" data-link="https://www.instagram.com/reel/DOylCvYgmRB/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" data-video="whyjunitec.mp4">
+              <img src="assets/whyjunitec.png" alt="" onerror="this.style.background='#111'" />
+              <div class="work-overlay"><span class="work-title">Porquê a JUNITEC?</span></div>
+            </div>
+          </div>
+          <button class="carousel-btn" onclick="scrollCarousel('junitec', 1)">→</button>
+        </div>
+      </div>
+
+      <div class="carousel-section">
+        <p class="section-label">./works/Tecstorm</p>
+        <div class="project-intro">
+          <div class="project-left">
+            <span class="project-number">02.</span>
+            <div class="project-desc">
+              <h2 class="project-title">TECSTORM</h2>
+              <p>TecStorm is the largest university hackathon, where technology meets innovation meets entrepreneurship. 
+                Over 24 hours, the participants develop creative and practical solutions with the support of mentors, workshops, and industry professionals of leading companies.</p>
+              <a href="https://www.tecstorm.pt/" class="learn-more" target="_blank" rel="noopener noreferrer">Learn more</a>
+            </div>
+          </div>
+          <img class="project-cover" src="assets/tecstorm-cover.jpg" alt="" onerror="this.style.background='#111';this.style.aspectRatio='16/9'" />
+        </div>
+        <div class="carousel-track">
+          <button class="carousel-btn" onclick="scrollCarousel('tecstorm', -1)">←</button>
+          <div class="carousel" id="tecstorm">
+            <div class="work-item" data-link="https://www.instagram.com/reel/C4Y2WYqMMXo/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" data-video="assets/tecshop.mp4">
+              <img src="assets/capa_tecshop.png" alt="" onerror="this.style.background='#111'" />
+              <div class="work-overlay"><span class="work-title">TecShop TS'24</span></div>
+            </div>
+            <div class="work-item" data-link="https://www.instagram.com/reel/Cz4f_QLsXa2/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" data-video="assets/teaser.mp4">
+              <img src="assets/capa_teaser.png" alt="" onerror="this.style.background='#111'" />
+              <div class="work-overlay"><span class="work-title">Teaser TecStorm'24</span></div>
+            </div>
+            <div class="work-item" data-link="https://www.instagram.com/reel/DB18bCeOR1l/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" data-video="assets/pprojects.mp4">
+              <img src="assets/pprojects.png" alt="" onerror="this.style.background='#111'" />
+              <div class="work-overlay"><span class="work-title">Previous Projects TS'25</span></div>
+            </div>
+            <div class="work-item" data-link="https://www.instagram.com/reel/C5Es-H2rMlh/?utm_source=ig_web_copy_link" data-video="assets/startupday.mp4">
+              <img src="assets/startupday.png" alt="" onerror="this.style.background='#111'" />
+              <div class="work-overlay"><span class="work-title">Startup Day TS'24</span></div>
+            </div>
+            <div class="work-item" data-link="https://www.instagram.com/reel/C5rJDFqMkMh/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" data-video="assets/final_teaser.mp4">
+              <img src="assets/final_teaser.png" alt="" onerror="this.style.background='#111'" />
+              <div class="work-overlay"><span class="work-title">Final Teaser TS'24</span></div>
+            </div>
+            <div class="work-item" data-link="https://www.instagram.com/reel/DBuUoqFMFLL/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" data-video="assets/hackathon.mp4">
+              <img src="assets/hackathon.png" alt="" onerror="this.style.background='#111'" />
+              <div class="work-overlay"><span class="work-title">Hackathon TS'25</span></div>
+            </div>
+          </div>
+          <button class="carousel-btn" onclick="scrollCarousel('tecstorm', 1)">→</button>
+        </div>
+      </div>
+
+    </section>
+
+
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer">
+    <div class="footer-gradient"></div>
+    <img class="footer-photo" src="assets/footerimg.png" alt="" />
+    <div class="footer-text">
+      <p class="footer-question">Want to know more?</p>
+      <p class="footer-cta">Reach out to me</p>
+    </div>
+  </footer>
+
+  <!-- ── VIDEO MODAL ── -->
+  <div class="modal" id="modal" onclick="closeModal(event)">
+    <div class="modal-inner">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <video id="modal-video" controls></video>
+    </div>
+  </div>
+
+  <script src="js/portfolio.js"></script>
+
+</body>
+</html>
