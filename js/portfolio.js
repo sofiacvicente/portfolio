@@ -130,6 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
   cycleTags();
   initHoverVideos();
   initWorkLinks();
+  initAnalytics();
+  initReceipt();
   // scramble all scattered letters
   document.querySelectorAll('.hs-letter[data-final]').forEach((el, i) => {
     el.textContent = el.dataset.final;
@@ -139,6 +141,85 @@ document.addEventListener('DOMContentLoaded', () => {
   const title = document.querySelector('.hs-title[data-final]');
   if (title) setTimeout(() => scrambleText(title, title.dataset.final, 2200), 200);
 });
+
+// ── RECEIPT ───────────────────────────────────────
+function initReceipt() {
+  const paper = document.getElementById('receipt-paper');
+  if (!paper) return;
+  const lines = paper.querySelectorAll('.receipt-line');
+  const barcode = paper.querySelector('.receipt-barcode');
+  let started = false;
+
+  const observer = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !started) {
+      started = true;
+      lines.forEach((line, i) => {
+        setTimeout(() => {
+          line.classList.add('visible');
+        }, i * 80);
+      });
+      setTimeout(() => {
+        if (barcode) barcode.classList.add('visible');
+      }, lines.length * 80 + 200);
+      observer.disconnect();
+    }
+  }, { threshold: 0.2 });
+
+  observer.observe(paper);
+}
+
+// ── ANALYTICS ─────────────────────────────────────
+function animateDonut(card) {
+  const numEl = card.querySelector('.stat-num');
+  if (!numEl) return;
+  const target = parseInt(numEl.dataset.target, 10);
+  const pct = numEl.querySelector('.stat-pct');
+
+  const duration = 1400;
+  const start = performance.now();
+  function tick(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - t, 3);
+    numEl.childNodes[0].textContent = Math.round(ease * target);
+    if (t < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+function initAnalytics() {
+  const cards = document.querySelectorAll('.analytics-card');
+  const btns = document.querySelectorAll('.af-btn');
+  let animated = false;
+
+  // filter
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      cards.forEach(card => {
+        const projects = card.dataset.projects || 'all';
+        card.classList.toggle('hidden', !projects.includes(filter));
+      });
+    });
+  });
+
+  // animate on scroll into view
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !animated) {
+        animated = true;
+        cards.forEach((card, i) => {
+          setTimeout(() => animateDonut(card), i * 120);
+        });
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const section = document.querySelector('.analytics-section');
+  if (section) observer.observe(section);
+}
 
 function scrollCarousel(id, dir) {
   const state = carouselState[id];

@@ -33,15 +33,15 @@
     <section class="camera-section">
       <div class="camera-wrap">
         <img class="camera-img" src="assets/camera.png" alt="camera" />
-        <div class="camera-screen" onclick="openModal('assets/showreel.mp4')">
-          <img src="assets/showreel-thumb.jpg" alt="" onerror="this.style.display='none'" />
+        <div class="camera-screen" onclick="openModal('assets/v3.mp4')">
+          <img src="assets/portfolio.png" alt="" onerror="this.style.display='none'" />
           <div class="screen-play">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           </div>
         </div>
       </div>
       <div class="hero-text">
-        <p class="whats-this">what's this?</p>
+        <p class="whats-this">./what's this?</p>
         <div class="search-bar">
           <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           <span class="search-name">A collection of moving ideas...<span class="search-cursor"></span></span>
@@ -53,9 +53,13 @@
     <section class="folders-section">
       <p class="section-label">./Navigate</p>
       <div class="folders-grid">
+        <a href="#sidequest" class="folder">
+          <div class="folder-icon"></div>
+          <span class="folder-name">./sidequest</span>
+        </a>
         <a href="#works" class="folder">
           <div class="folder-icon"></div>
-          <span class="folder-name">./works</span>
+          <span class="folder-name">./archive</span>
         </a>
         <div class="folder folder-radial" onclick="toggleRadial(this)">
           <div class="folder-icon"></div>
@@ -71,7 +75,7 @@
         </div>
         <div class="folder folder-radial" onclick="toggleRadial(this)">
           <div class="folder-icon"></div>
-          <span class="folder-name">./software</span>
+          <span class="folder-name">./toolbox</span>
           <div class="folder-items">
             <span class="folder-item folder-item-logo" onclick="zoomItem(this, event)" style="background:#2a1a3e;border-color:#9f6ff7;"><span style="color:#9f6ff7;font-weight:600;font-size:0.75rem;">Pr</span><span class="logo-name">Premiere Pro</span></span>
             <span class="folder-item folder-item-logo" onclick="zoomItem(this, event)" style="background:#1a2a3e;border-color:#9ab8c2;"><span style="color:#9ab8c2;font-weight:600;font-size:0.75rem;">Ae</span><span class="logo-name">After Effects</span></span>
@@ -88,7 +92,7 @@
     <section class="works-section" id="works">
 
       <div class="carousel-section">
-        <p class="section-label">./works/Junitec</p>
+        <p class="section-label">./archive/JUNITEC</p>
         <div class="project-intro">
           <div class="project-left">
             <span class="project-number">01.</span>
@@ -99,7 +103,6 @@
               <a href="https://www.junitec.pt/" class="learn-more" target="_blank" rel="noopener noreferrer">Learn more</a>
             </div>
           </div>
-          <img class="project-cover" src="assets/junitec-cover.jpg" alt="" onerror="this.style.background='#111';this.style.aspectRatio='16/9'" />
         </div>
         <div class="carousel-track">
           <button class="carousel-btn" onclick="scrollCarousel('junitec', -1)">←</button>
@@ -126,7 +129,7 @@
       </div>
 
       <div class="carousel-section">
-        <p class="section-label">./works/Tecstorm</p>
+        <p class="section-label">./archive/TECSTORM</p>
         <div class="project-intro">
           <div class="project-left">
             <span class="project-number">02.</span>
@@ -137,7 +140,6 @@
               <a href="https://www.tecstorm.pt/" class="learn-more" target="_blank" rel="noopener noreferrer">Learn more</a>
             </div>
           </div>
-          <img class="project-cover" src="assets/tecstorm-cover.jpg" alt="" onerror="this.style.background='#111';this.style.aspectRatio='16/9'" />
         </div>
         <div class="carousel-track">
           <button class="carousel-btn" onclick="scrollCarousel('tecstorm', -1)">←</button>
@@ -173,16 +175,102 @@
 
     </section>
 
+    <!-- ── ANALYTICS ── -->
+    <section class="analytics-section">
+      <p class="section-label">./Tecstorm/analytics</p>
+      <div class="analytics-grid">
+        <div class="analytics-card">
+          <span class="stat-arrow">↑</span>
+          <span class="stat-num" data-target="40">0<span class="stat-pct">%</span></span>
+          <span class="stat-label">Reach</span>
+          <span class="stat-period">nov. 2025 — mai. 2026</span>
+        </div>
+        <div class="analytics-card">
+          <span class="stat-arrow">↑</span>
+          <span class="stat-num" data-target="34">0<span class="stat-pct">%</span></span>
+          <span class="stat-label">Impressões</span>
+          <span class="stat-period">nov. 2025 — mai. 2026</span>
+        </div>
+        <div class="analytics-card">
+          <span class="stat-arrow">↑</span>
+          <span class="stat-num" data-target="31">0<span class="stat-pct">%</span></span>
+          <span class="stat-label">Seguidores</span>
+          <span class="stat-period">nov. 2025 — mai. 2026</span>
+        </div>
+        <div class="analytics-card">
+          <span class="stat-arrow">↑</span>
+          <span class="stat-num" data-target="42">0<span class="stat-pct">%</span></span>
+          <span class="stat-label">Likes</span>
+          <span class="stat-period">nov. 2025 — mai. 2026</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── KRITICQ ── -->
+    <section class="carousel-section kriticq-section">
+      <p class="section-label">./archive/KRITICQ</p>
+      <div class="project-intro">
+        <div class="project-left kriticq-left">
+          <span class="project-number">03.</span>
+          <div class="project-desc">
+            <h2 class="project-title">kriticQ</h2>
+            <p>AI startup that analyses papers from the scientific community and rates their impact.</p>
+            <a href="" class="learn-more" target="_blank" rel="noopener noreferrer">Learn more</a>
+          </div>
+        </div>
+        <img class="kriticq-cover" src="assets/kriticq.png" alt="" onerror="this.style.background='#111'" />
+      </div>
+    </section>
+
+    <!-- ── SIDEQUEST GALLERY ── -->
+    <section class="gallery-section" id="sidequest">
+      <p class="section-label">./sidequest/photography</p>
+      <div class="gallery-grid">
+        <div class="gallery-item"><img src="assets/photography/photo1.png" alt="" /></div>
+        <div class="gallery-item"><img src="assets/photography/photo2.png" alt="" /></div>
+        <div class="gallery-item"><img src="assets/photography/photo3.png" alt="" /></div>
+        <div class="gallery-item"><img src="assets/photography/photo4.png" alt="" /></div>
+        <div class="gallery-item"><img src="assets/photography/photo5.png" alt="" /></div>
+        <div class="gallery-item"><img src="assets/photography/photo6.png" alt="" /></div>
+        <div class="gallery-item"><img src="assets/photography/photo7.jpeg" alt="" /></div>
+        <div class="gallery-item"><img src="assets/photography/photo8.png" alt="" /></div>
+        <div class="gallery-item"><img src="assets/photography/photo9.png" alt="" /></div>
+      </div>
+    </section>
 
   </div>
 
-  <!-- ── FOOTER ── -->
-  <footer class="site-footer">
-    <div class="footer-gradient"></div>
-    <img class="footer-photo" src="assets/footerimg.png" alt="" />
-    <div class="footer-text">
-      <p class="footer-question">Want to know more?</p>
-      <p class="footer-cta">Reach out to me</p>
+  <!-- ── FOOTER RECEIPT ── -->
+  <footer class="receipt-footer">
+    <span class="footer-copy">©2026 Sofia Vicente</span>
+    <div class="receipt-printer">
+      <div class="printer-slot"></div>
+      <div class="receipt-paper" id="receipt-paper">
+        <div class="receipt-line rline-title">PORTFOLIO RECEIPT</div>
+        <div class="receipt-line rline-divider">--------------------------------</div>
+        <div class="receipt-line rline-sub">CREATIVE CONTENT</div>
+        <div class="receipt-line rline-detail">25% STRATEGY</div>
+        <div class="receipt-line rline-detail">25% INTENTION</div>
+        <div class="receipt-line rline-detail">25% AUTHENTICITY</div>
+        <div class="receipt-line rline-detail">25% PRECISION</div>
+        <div class="receipt-line rline-divider">--------------------------------</div>
+        <div class="receipt-line rline-item">
+          <span>NEWEST HIRE</span><span>- - - - - - - 1</span>
+        </div>
+        <div class="receipt-line rline-divider">--------------------------------</div>
+        <div class="receipt-line rline-total">
+          <span>TOTAL:</span><span>100% PASSION</span>
+        </div>
+        <div class="receipt-line rline-divider">--------------------------------</div>
+        <div class="receipt-line rline-why">WHY ME?</div>
+        <div class="receipt-line rline-because">BECAUSE YOUR BRAND</div>
+        <div class="receipt-line rline-because">DESERVES AN</div>
+        <div class="receipt-line rline-because">INVALUABLE TOUCH.</div>
+        <div class="receipt-line rline-divider">--------------------------------</div>
+        <div class="receipt-line rline-contact">svicente005@gmail.com</div>
+        <div class="receipt-barcode">||| || |||| ||| || ||||| || ||||</div>
+        <div class="receipt-tail"></div>
+      </div>
     </div>
   </footer>
 
