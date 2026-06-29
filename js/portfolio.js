@@ -104,26 +104,7 @@ function initWorkLinks() {
 }
 
 function initHoverVideos() {
-  document.querySelectorAll('.work-item[data-video]').forEach(item => {
-    const src = item.dataset.video;
-    if (!src) return;
-
-    const video = document.createElement('video');
-    video.muted = true;
-    video.loop = true;
-    video.playsInline = true;
-    video.className = 'hover-video';
-    item.appendChild(video);
-
-    item.addEventListener('mouseenter', () => {
-      if (!video.src) video.src = src;
-      video.play();
-    });
-    item.addEventListener('mouseleave', () => {
-      video.pause();
-      video.currentTime = 0;
-    });
-  });
+  // videos hosted externally — hover preview disabled
 }
 
 document.addEventListener('DOMContentLoaded', () => {
