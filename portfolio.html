@@ -15,7 +15,7 @@
 
     <!-- ── HERO ── -->
     <section class="hero-section">
-      <video class="hero-video" src="https://res.cloudinary.com/dvgpmog2u/video/upload/v1782730386/hero-bg_htrg32.mp4" autoplay muted loop playsinline></video>
+      <video class="hero-video" src="https://res.cloudinary.com/dvgpmog2u/video/upload/v1782730386/hero-bg_htrg32.mp4" autoplay muted loop playsinline preload="auto"></video>
       <div class="hero-overlay"></div>
       <span class="hs-letter" style="top:18%;left:3%;font-size:clamp(3rem,6.5vw,7.5rem);" data-final="./">/</span>
       <span class="hs-letter" style="top:16%;left:13%;font-size:clamp(3rem,7vw,8rem);" data-final="S">S</span>
@@ -279,6 +279,7 @@
     <div class="modal-inner">
       <button class="modal-close" onclick="closeModal()">✕</button>
       <video id="modal-video" controls></video>
+      <iframe id="modal-iframe" allow="autoplay; fullscreen" allowfullscreen style="display:none;width:100%;aspect-ratio:16/9;border:none;border-radius:4px;"></iframe>
     </div>
   </div>
 

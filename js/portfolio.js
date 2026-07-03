@@ -217,8 +217,18 @@ document.addEventListener('DOMContentLoaded', () => {
 function openModal(src) {
   const modal = document.getElementById('modal');
   const video = document.getElementById('modal-video');
-  video.src = src;
-  video.play();
+  const iframe = document.getElementById('modal-iframe');
+
+  if (src.includes('player.cloudinary.com') || src.includes('youtube.com') || src.includes('vimeo.com')) {
+    video.style.display = 'none';
+    iframe.style.display = 'block';
+    iframe.src = src;
+  } else {
+    iframe.style.display = 'none';
+    video.style.display = 'block';
+    video.src = src;
+    video.play();
+  }
   modal.classList.add('open');
 }
 
@@ -226,8 +236,10 @@ function closeModal(e) {
   if (e && e.target !== document.getElementById('modal') && !e.target.classList.contains('modal-close')) return;
   const modal = document.getElementById('modal');
   const video = document.getElementById('modal-video');
+  const iframe = document.getElementById('modal-iframe');
   video.pause();
   video.src = '';
+  iframe.src = '';
   modal.classList.remove('open');
 }
 
