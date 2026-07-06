@@ -1135,7 +1135,20 @@ html, body {
     padding: 60px 0;
     margin-bottom: 40px;
   }
-  .folders-grid { height: 340px; }
+  .folders-grid { height: 380px; }
+
+  /* desktop rules only set the folder's left edge, so the fixed 90px
+     icon isn't actually centered on its %-based anchor once the grid
+     is this narrow; center each folder on its anchor point instead */
+  .folder {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .folder:nth-child(1) { top: 0; }
+  .folder:nth-child(2) { left: 24%; top: 42%; }
+  .folder:nth-child(3) { left: 76%; top: 42%; }
+  .folder:nth-child(4) { top: 84%; }
+  .folder-radial.open { transform: translateX(-50%) scale(1.2); }
 
   /* ── WORKS: desktop spacing was excessive on mobile ── */
   .works-section { margin-bottom: 40px; }
