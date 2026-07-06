@@ -1088,8 +1088,83 @@ html, body {
 /* ── RESPONSIVE ── */
 @media (max-width: 700px) {
   .portfolio-wrap { padding: 60px 24px 80px; }
-  .hero-title { font-size: 4rem; }
   .project-intro { flex-direction: column; }
   .project-left { flex: none; }
   .carousel-track { gap: 8px; }
+
+  /* ── HERO: scattered letters collide on narrow screens ── */
+  .hs-letter { display: none; }
+  .hs-tagline {
+    left: 6%;
+    right: 6%;
+    top: 34%;
+  }
+  .hs-title {
+    left: 6%;
+    right: 6%;
+    bottom: 6%;
+    font-size: clamp(2.4rem, 13vw, 3.5rem);
+  }
+
+  /* ── CAMERA + SEARCH: fixed desktop widths overflowed the screen ── */
+  .camera-section {
+    flex-direction: column;
+    gap: 32px;
+    min-height: auto;
+    padding: 60px 24px;
+  }
+  .camera-wrap {
+    width: min(300px, 78vw);
+  }
+  .camera-wrap img.camera-img {
+    width: 100%;
+  }
+  .hero-text {
+    width: 100%;
+    max-width: min(300px, 78vw);
+  }
+  .search-bar {
+    width: 100%;
+    padding: 14px 20px;
+  }
+  .whats-this { text-align: left; }
+
+  /* ── FOLDERS: full-viewport height left huge empty gaps on mobile ── */
+  .folders-section {
+    min-height: auto;
+    padding: 60px 0;
+    margin-bottom: 40px;
+  }
+  .folders-grid { height: 340px; }
+
+  /* ── WORKS: desktop spacing was excessive on mobile ── */
+  .works-section { margin-bottom: 40px; }
+  .carousel-section { margin-bottom: 60px; }
+  .kriticq-section { margin-bottom: 0; }
+  .kriticq-cover { width: 100%; }
+
+  /* single active thumbnail instead of a cramped 3-up strip */
+  .carousel .work-item { flex: 0 0 100%; width: 100%; }
+  .carousel .work-item:not(.active) { display: none !important; }
+
+  /* ── ANALYTICS: 4 columns cut text off on narrow screens ── */
+  .analytics-section { padding: 40px 0 60px; }
+  .analytics-grid { grid-template-columns: 1fr 1fr; }
+  .analytics-card {
+    padding: 28px 20px;
+    border-bottom: 1px solid #1e1e1e;
+  }
+  .analytics-card:nth-child(2n) { border-right: none; }
+  .analytics-card:nth-last-child(-n+2) { border-bottom: none; }
+
+  .gallery-section { padding: 40px 0 60px; }
+
+  /* ── RECEIPT: fixed widths could overflow very narrow phones ── */
+  .receipt-footer { padding: 40px 0 60px; }
+  .receipt-printer { width: min(340px, 82vw); }
+  .printer-slot { width: 76%; }
+  .receipt-paper { width: 76%; }
+
+  /* ── MODAL: 55vw was too narrow to watch on a phone ── */
+  .modal-inner { width: 90vw; }
 }
