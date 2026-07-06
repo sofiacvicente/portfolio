@@ -276,9 +276,18 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeModal();
 });
 
+let radialBackdrop = null;
+function removeBackdrop() {
+  if (radialBackdrop) {
+    radialBackdrop.remove();
+    radialBackdrop = null;
+  }
+}
+
 function closeRadial(folder, callback) {
-  const items = folder.querySelectorAll('.folder-item');
+  const items = (folder._itemsEl || folder).querySelectorAll('.folder-item');
   folder.classList.remove('open');
+  removeBackdrop();
   items.forEach((item, i) => {
     setTimeout(() => {
       item.style.transform = 'translate(-50%, -50%) scale(0)';
@@ -287,6 +296,11 @@ function closeRadial(folder, callback) {
   });
   const count = items.length;
   setTimeout(() => {
+    if (folder._itemsEl) {
+      folder._itemsEl.classList.remove('panel-open');
+      folder.appendChild(folder._itemsEl);
+      folder._itemsEl = null;
+    }
     if (callback) callback();
   }, count * 30 + 350);
 }
@@ -311,7 +325,26 @@ function toggleRadial(folder) {
   if (openFolder) closeRadial(openFolder);
 
   folder.classList.add('open');
-  const items = folder.querySelectorAll('.folder-item');
+
+  // on narrow screens the pop-out becomes a centered panel (see CSS);
+  // add a backdrop behind it so it reads as a menu and taps outside close it
+  if (window.innerWidth <= 700) {
+    radialBackdrop = document.createElement('div');
+    radialBackdrop.className = 'folder-backdrop';
+    radialBackdrop.addEventListener('click', () => closeRadial(folder));
+    document.body.appendChild(radialBackdrop);
+
+    // .folder-items is `position:fixed`, but the folder's own open/scale
+    // transform makes it a containing block for fixed descendants, which
+    // traps the panel next to the folder instead of centering it on the
+    // viewport. Lift it out to <body> while open, put it back on close.
+    const itemsEl = folder.querySelector('.folder-items');
+    itemsEl.classList.add('panel-open');
+    document.body.appendChild(itemsEl);
+    folder._itemsEl = itemsEl;
+  }
+
+  const items = (folder._itemsEl || folder).querySelectorAll('.folder-item');
   const count = items.length;
   // a fixed 110px spread pushed items on narrow screens past the
   // viewport edge and got clipped; shrink it to fit smaller widths
