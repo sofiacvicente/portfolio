@@ -584,7 +584,8 @@ html, body {
   overflow: hidden;
   cursor: pointer;
   height: 0;
-  padding-bottom: 56.25%;
+  /* these are Instagram Reels covers — vertical, not landscape */
+  padding-bottom: 177.78%;
 }
 
 .work-item video,
