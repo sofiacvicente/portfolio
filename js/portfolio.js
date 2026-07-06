@@ -107,8 +107,31 @@ function initHoverVideos() {
   // videos hosted externally — hover preview disabled
 }
 
+// ── HERO VIDEO ─────────────────────────────────────
+// Some mobile browsers ignore the autoplay attribute (blocked by data-saver
+// settings, silently fail the promise, etc). Force it explicitly and retry
+// on the first tap so the background never gets stuck on a black frame.
+function initHeroVideo() {
+  const video = document.getElementById('hero-video');
+  if (!video) return;
+  video.muted = true;
+
+  const tryPlay = () => video.play().catch(() => {});
+  tryPlay();
+  video.addEventListener('loadeddata', tryPlay);
+
+  const resumeOnInteraction = () => {
+    tryPlay();
+    window.removeEventListener('touchstart', resumeOnInteraction);
+    window.removeEventListener('click', resumeOnInteraction);
+  };
+  window.addEventListener('touchstart', resumeOnInteraction, { once: true, passive: true });
+  window.addEventListener('click', resumeOnInteraction, { once: true });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   cycleTags();
+  initHeroVideo();
   initHoverVideos();
   initWorkLinks();
   initAnalytics();
@@ -284,7 +307,9 @@ function toggleRadial(folder) {
   folder.classList.add('open');
   const items = folder.querySelectorAll('.folder-item');
   const count = items.length;
-  const radius = 110;
+  // a fixed 110px spread pushed items on narrow screens past the
+  // viewport edge and got clipped; shrink it to fit smaller widths
+  const radius = window.innerWidth <= 700 ? Math.min(70, window.innerWidth * 0.18) : 110;
 
   items.forEach((item, i) => {
     item.style.opacity = '0';
