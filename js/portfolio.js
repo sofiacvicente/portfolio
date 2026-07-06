@@ -287,7 +287,6 @@ function removeBackdrop() {
 function closeRadial(folder, callback) {
   const items = (folder._itemsEl || folder).querySelectorAll('.folder-item');
   folder.classList.remove('open');
-  removeBackdrop();
   items.forEach((item, i) => {
     setTimeout(() => {
       item.style.transform = 'translate(-50%, -50%) scale(0)';
@@ -296,11 +295,14 @@ function closeRadial(folder, callback) {
   });
   const count = items.length;
   setTimeout(() => {
+    // move the panel back out of the backdrop before the backdrop is
+    // removed, otherwise removing its parent would delete it too
     if (folder._itemsEl) {
       folder._itemsEl.classList.remove('panel-open');
       folder.appendChild(folder._itemsEl);
       folder._itemsEl = null;
     }
+    removeBackdrop();
     if (callback) callback();
   }, count * 30 + 350);
 }
@@ -331,16 +333,20 @@ function toggleRadial(folder) {
   if (window.innerWidth <= 700) {
     radialBackdrop = document.createElement('div');
     radialBackdrop.className = 'folder-backdrop';
-    radialBackdrop.addEventListener('click', () => closeRadial(folder));
+    // only close when the tap lands on the backdrop itself, not the panel
+    // (a descendant of it) or anything inside it
+    radialBackdrop.addEventListener('click', (e) => {
+      if (e.target === radialBackdrop) closeRadial(folder);
+    });
     document.body.appendChild(radialBackdrop);
 
-    // .folder-items is `position:fixed`, but the folder's own open/scale
-    // transform makes it a containing block for fixed descendants, which
-    // traps the panel next to the folder instead of centering it on the
-    // viewport. Lift it out to <body> while open, put it back on close.
+    // the folder's own open/scale transform makes it a containing block
+    // for fixed-position descendants, which trapped the panel next to the
+    // folder instead of centering it. Move it into the backdrop instead,
+    // which centers it with flexbox — simpler and unaffected by that issue.
     const itemsEl = folder.querySelector('.folder-items');
     itemsEl.classList.add('panel-open');
-    document.body.appendChild(itemsEl);
+    radialBackdrop.appendChild(itemsEl);
     folder._itemsEl = itemsEl;
   }
 
