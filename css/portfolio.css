@@ -1198,7 +1198,12 @@ html, body {
     transform: none !important;
   }
   .folder-item-logo {
+    /* flex items default to min-width:auto, which let the unwrapped
+       label text force this wider than 68px and crowd into the next
+       column — flex:0 0 68px plus min-width:0 locks the width for real */
+    flex: 0 0 68px;
     width: 68px !important;
+    min-width: 0;
     height: auto !important;
     padding: 10px 4px 8px !important;
   }
@@ -1209,6 +1214,8 @@ html, body {
     white-space: normal;
     text-align: center;
     line-height: 1.25;
+    max-width: 100%;
+    overflow-wrap: break-word;
   }
 
   /* ── WORKS: desktop spacing was excessive on mobile ── */
