@@ -118,15 +118,21 @@ function initHeroVideo() {
 
   const tryPlay = () => video.play().catch(() => {});
   tryPlay();
-  video.addEventListener('loadeddata', tryPlay);
+  ['loadeddata', 'canplay', 'canplaythrough'].forEach(evt => video.addEventListener(evt, tryPlay));
 
-  const resumeOnInteraction = () => {
-    tryPlay();
-    window.removeEventListener('touchstart', resumeOnInteraction);
-    window.removeEventListener('click', resumeOnInteraction);
+  const stopRetrying = () => {
+    window.removeEventListener('touchstart', tryPlay);
+    window.removeEventListener('click', tryPlay);
+    document.removeEventListener('visibilitychange', onVisible);
   };
-  window.addEventListener('touchstart', resumeOnInteraction, { once: true, passive: true });
-  window.addEventListener('click', resumeOnInteraction, { once: true });
+  const onVisible = () => { if (!document.hidden) tryPlay(); };
+
+  // keep retrying on every tap (not just the first) until it's actually
+  // playing — a single blocked attempt shouldn't give up permanently
+  window.addEventListener('touchstart', tryPlay, { passive: true });
+  window.addEventListener('click', tryPlay);
+  document.addEventListener('visibilitychange', onVisible);
+  video.addEventListener('playing', stopRetrying);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
