@@ -18,12 +18,12 @@ const BIO = [
     keyword: 'projects',
     panel: 'projects'
   },
-  {
+  /* {
     text: 'She reflects both the engineer and the creative thinker side in her {{portfolio}}.',
     keyword: 'portfolio',
     panel: null,
     href: 'portfolio.html'
-  },
+  }, */
   {
     text: 'She has been featured in {{news and publications}}.',
     keyword: 'news and publications',
