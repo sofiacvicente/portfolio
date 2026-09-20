@@ -6,7 +6,6 @@
   var PAGE_W = 600;          // page proportions (3:4) — the real size comes from the screen
   var PAGE_H = 800;
   var RATIO = PAGE_W / PAGE_H;
-  var MIN_SPREAD_PAGE = 260; // below this page width, show one page at a time
   var MAX_SPREAD = 1500;     // widest the open magazine gets, in px
 
   var viewer = document.getElementById("viewer");
@@ -41,21 +40,18 @@
 
   var book = null;
 
-  /* Pick one page or a two-page spread, whichever reads bigger, and size the book to fit the stage. */
+  /* Always a two-page spread — on the phone as on the desktop — sized to fit the stage. */
   function layout() {
     var cs = getComputedStyle(stage);
     var aw = stage.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
     var ah = viewer.clientHeight - controls.offsetHeight - (hint ? hint.offsetHeight : 0) -
       parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
 
-    var spreadW = Math.min(aw, ah * RATIO * 2, MAX_SPREAD);
-    var singleW = Math.min(aw, ah * RATIO);
-    var spread = spreadW / 2 >= MIN_SPREAD_PAGE && spreadW / 2 >= singleW * 0.72;
-    var w = Math.max(160, Math.floor(spread ? spreadW : singleW));
+    var w = Math.max(160, Math.floor(Math.min(aw, ah * RATIO * 2, MAX_SPREAD)));
 
     shift.style.width = w + "px";
-    // the library shows one page when the block is narrower than 2 × minWidth
-    var minWidth = spread ? 1 : w;
+    // minWidth 1 keeps the library in landscape (two pages) at every screen width
+    var minWidth = 1;
     if (book) book.getSettings().minWidth = minWidth;
     return minWidth;
   }
@@ -73,7 +69,7 @@
     minHeight: 100,
     maxHeight: 3000,
     showCover: true,
-    usePortrait: true,
+    usePortrait: false,   // never fall back to one page at a time
     mobileScrollSupport: true,
     maxShadowOpacity: 0.55,
     flippingTime: reduceMotion ? 350 : 900,
