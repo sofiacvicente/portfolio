@@ -1,2 +1,12 @@
 assets/*.mp4
 assets/*.MP4
+
+# Raw/source media
+magazine/zine/
+
+# Duplicate/generated copy
+magazine/site/
+
+# Windows/macOS junk
+Thumbs.db
+.DS_Store

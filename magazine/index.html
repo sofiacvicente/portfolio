@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>SOFIA Magazine</title>
+  <meta name="description" content="ON FILM Nº 01 — perception at an arm's length.">
+  <meta name="theme-color" content="#161616">
+  <meta property="og:title" content="ON FILM — Nº 01">
+  <meta property="og:description" content="Perception at an arm's length.">
+  <meta property="og:image" content="https://sofiacvicente.pt/magazine/img/n9-cover.jpg">
+  <link rel="preload" href="fonts/archivo-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app">
+
+  <main class="viewer" id="viewer">
+    <div class="stage" id="stage">
+      <div class="book-shift is-cover" id="bookShift">
+        <div class="book" id="book" role="region" aria-label="ON FILM, Nº 01">
+
+          <!-- 01 · COVER — paper, one band of sea across it -->
+          <section class="page cover cover--paper" data-density="hard" aria-label="Cover">
+            <p class="cover__kicker"><span>01</span><span>scv</span></p>
+            <p class="rule" style="--t:11"></p>
+            <figure class="ph ph--band date-up" data-fx="film" data-date="'26 8 04" style="--t:34;--h:56"><img src="img/n9-cover.jpg" alt="The beach and the sea, waves coming in"></figure>
+            <p class="cover__name">ON FILM</p>
+            <p class="cover__sub">perception at an arm's length</p>
+          </section>
+
+          <!-- 02 · the street, in june -->
+          <section class="page" aria-label="Page 2">
+            <figure class="ph ph--band" data-fx="film" style="--t:18;--h:62"><img src="img/n8-festa.jpg" alt="The street party, garlands over the crowd"></figure>
+            <p class="folio folio--l">02</p>
+          </section>
+
+          <!-- 03 · full bleed -->
+          <section class="page" aria-label="Page 3">
+            <figure class="ph ph--full"><img src="img/n4-court.jpg" alt="A courtyard in the sun, someone walking across it"></figure>
+            <p class="folio folio--r folio--light">03</p>
+          </section>
+
+          <!-- 04 · three bands, stacked like a strip of film -->
+          <section class="page" aria-label="Page 4">
+            <figure class="ph ph--band" data-fx="bw" style="--t:8;--h:30"><img src="img/n8-pool.jpg" alt="The pool, under the trees"></figure>
+            <figure class="ph ph--band" style="--t:44;--h:34"><img src="img/n7-sleeves.jpg" alt="A wall of record sleeves"></figure>
+            <figure class="ph ph--band" style="--t:84;--h:40"><img src="img/n8-dog.jpg" alt="The dog in the grass, tongue out"></figure>
+            <p class="folio folio--l">04</p>
+          </section>
+
+          <!-- 05 · full bleed -->
+          <section class="page" aria-label="Page 5">
+            <figure class="ph ph--full" data-fx="film"><img src="img/n8-road.jpg" alt="Standing on a gravel road, a white house behind"></figure>
+            <p class="folio folio--r folio--light">05</p>
+          </section>
+
+          <!-- 06 · two rooms with the lights off -->
+          <section class="page page--dark" aria-label="Page 6">
+            <figure class="ph ph--band" style="--t:14;--h:50"><img src="img/n8-neon.jpg" alt="A neon sign reading Besame mucho"></figure>
+            <figure class="ph ph--band" style="--t:72;--h:50"><img src="img/n8-club.jpg" alt="A comedy club, red brick and red light"></figure>
+            <p class="folio folio--l folio--light">06</p>
+          </section>
+
+          <!-- 07 · the ones that would not hold still -->
+          <section class="page" aria-label="Page 7, moving pictures">
+            <figure class="ph ph--band" style="--t:8;--h:40">
+              <div class="frame"><video poster="img/n3-road.jpg" autoplay loop muted playsinline preload="auto" aria-label="A road at sunset, from the car window"><source src="vid/n3-road.mp4" type="video/mp4"><source src="vid/n3-road.webm" type="video/webm"></video></div>
+            </figure>
+            <figure class="ph ph--band" style="--t:52;--h:40">
+              <div class="frame"><video poster="img/n3-train.jpg" autoplay loop muted playsinline preload="auto" aria-label="The track going past, through the train door"><source src="vid/n3-train.mp4" type="video/mp4"><source src="vid/n3-train.webm" type="video/webm"></video></div>
+            </figure>
+            <p class="folio folio--r">07</p>
+          </section>
+
+          <!-- 08 · the scroll, on its own -->
+          <section class="page" aria-label="Page 8, moving pictures">
+            <figure class="ph" style="--l:32;--t:30;--w:36;--ar:400/816">
+              <div class="frame"><video poster="img/n8-scroll.jpg" autoplay loop muted playsinline preload="auto" aria-label="Scrolling through the favourites, all the same photograph"><source src="vid/n8-scroll.mp4" type="video/mp4"><source src="vid/n8-scroll.webm" type="video/webm"></video></div>
+            </figure>
+            <p class="folio folio--l">08</p>
+          </section>
+
+          <!-- 09 · full bleed -->
+          <section class="page" aria-label="Page 9">
+            <figure class="ph ph--full" data-fx="film"><img src="img/n9-town.jpg" alt="The town across the water, under big clouds"></figure>
+            <p class="folio folio--r folio--light">09</p>
+          </section>
+
+          <!-- 08 · colour, measured off the photographs -->
+          <section class="page" aria-label="Page 10, colours">
+            <div class="chart" style="--t:30;--l:10;--rr:10">
+              <div><i style="--c:#5599AB"></i><b>#5599AB</b><em>the sea, from in it</em></div>
+              <div><i style="--c:#D6C4A4"></i><b>#D6C4A4</b><em>a wall at four o'clock</em></div>
+              <div><i style="--c:#877E71"></i><b>#877E71</b><em>a wall of sleeves</em></div>
+              <div><i style="--c:#726754"></i><b>#726754</b><em>a bakery ceiling</em></div>
+              <div><i style="--c:#2F3830"></i><b>#2F3830</b><em>the windscreen</em></div>
+              <div><i style="--c:#030205"></i><b>#030205</b><em>the street, after midnight</em></div>
+            </div>
+            <p class="folio folio--l">10</p>
+          </section>
+
+          <!-- 09 · one band, printed black and white -->
+          <section class="page" aria-label="Page 11">
+            <figure class="ph ph--band" data-fx="bw" style="--t:18;--h:62"><img src="img/n7-rocks.jpg" alt="Looking out over the rocks, towards the city"></figure>
+            <p class="folio folio--r">11</p>
+          </section>
+
+          <!-- 10 · two bands, everybody in them -->
+          <section class="page" aria-label="Page 12">
+            <figure class="ph ph--band" style="--t:14;--h:44"><img src="img/n8-girls.jpg" alt="All of us in a dormitory, bunk beds behind"></figure>
+            <figure class="ph ph--band" data-fx="film" style="--t:66;--h:40"><img src="img/n9-bridge.jpg" alt="The bridge over the river"></figure>
+            <p class="folio folio--l">12</p>
+          </section>
+
+          <!-- 13 · one band, low on the page -->
+          <section class="page" aria-label="Page 13">
+            <figure class="ph ph--band" data-fx="film" style="--t:56;--h:78"><img src="img/n9-sand.jpg" alt="Sun moving on the sand under shallow water"></figure>
+            <p class="folio folio--r folio--light">13</p>
+          </section>
+
+          <!-- 08 · THE SAME PICTURE, TWICE -->
+          <section class="page" aria-label="Page 14">
+            <figure class="ph ph--band" data-fx="film" style="--t:16;--h:62"><img src="img/n3-diptych.jpg" alt="The same photograph of me by the river, printed twice"></figure>
+            <p class="folio folio--l">14</p>
+          </section>
+
+          <!-- 09 · NIGHT DRIVE — dark page, the road bleeding off the top -->
+          <section class="page page--dark" aria-label="Page 15">
+            <figure class="ph ph--band date-up" data-fx="film" data-date="'26 7 09" style="--t:0;--h:88"><img src="img/n3-dark.jpg" alt="The road ahead, seen from the passenger seat"></figure>
+            <p class="folio folio--r folio--light">15</p>
+          </section>
+
+          <!-- 10 · SPECIFICATIONS — the camera, as the manual has it -->
+          <section class="page" aria-label="Page 16, specifications">
+            <p class="tiny" style="--l:6;--t:13">specifications</p>
+            <p class="rule" style="--t:18;--l:6;--rr:6"></p>
+
+            <div class="spec" style="--t:24;--l:6;--rr:6">
+              <p class="spec__head">body</p>
+              <ul>
+                <li><span>model</span>Canon AE-1 Program, 1981</li>
+                <li><span>type</span>35 mm SLR, focal plane</li>
+                <li><span>mount</span>Canon FD, breech-lock</li>
+              </ul>
+
+              <p class="spec__head">lenses</p>
+              <ul>
+                <li><span>normal</span>FD 50 mm f/1.4</li>
+                <li><span>wide</span>FD 28 mm f/2.8</li>
+                <li><span>long</span>FD 135 mm f/2.5, rarely</li>
+              </ul>
+
+              <p class="spec__head">exposure</p>
+              <ul>
+                <li><span>shutter</span>2 s to 1/1000, and B</li>
+                <li><span>metering</span>centre-weighted, TTL</li>
+                <li><span>modes</span>program · shutter · manual</li>
+              </ul>
+
+              <p class="spec__head">film</p>
+              <ul>
+                <li><span>speeds</span>ASA 12 to 3200</li>
+                <li><span>stock</span>Portra 400 · HP5 Plus</li>
+                <li><span>sync</span>1/60 s, hot shoe</li>
+              </ul>
+            </div>
+
+            <p class="rule" style="--t:110;--l:6;--rr:6"></p>
+            <p class="spec__foot" style="--t:114;--l:6;--rr:6">viewfinder 93.5 % at 0.83× · 6 V battery, dead half the time · winder A when I remember it · set in Archivo and Instrument Serif · sofiacvicente.pt</p>
+            <p class="folio folio--l">16</p>
+          </section>
+
+          <!-- 11 · TEST PRINTS — one photo, nine effects -->
+          <section class="page" aria-label="Page 17, test prints">
+            <figure class="ph" style="--l:7.5;--t:20;--w:25;--ar:1/1"><img src="img/n3-grid.jpg" alt="Original"></figure>
+            <figure class="ph" data-fx="film" style="--l:37.5;--t:20;--w:25;--ar:1/1"><img src="img/n3-grid.jpg" alt="Film"></figure>
+            <figure class="ph" data-fx="booth" style="--l:67.5;--t:20;--w:25;--ar:1/1"><img src="img/n3-grid.jpg" alt="Photobooth"></figure>
+
+            <figure class="ph" data-fx="bw" style="--l:7.5;--t:54;--w:25;--ar:1/1"><img src="img/n3-grid.jpg" alt="Black and white"></figure>
+            <figure class="ph" data-fx="dissolve" style="--l:37.5;--t:54;--w:25;--ar:1/1"><img src="img/n3-grid.jpg" alt="Dissolve"></figure>
+            <figure class="ph" data-fx="motion" style="--l:67.5;--t:54;--w:25;--ar:1/1"><img src="img/n3-grid.jpg" alt="Motion"></figure>
+
+            <figure class="ph" data-fx="streak" style="--l:7.5;--t:88;--w:25;--ar:1/1"><img src="img/n3-grid.jpg" alt="Streak"></figure>
+            <figure class="ph fx-halftone" style="--l:37.5;--t:88;--w:25;--ar:1/1;--dot:0.9cqw"><img src="img/n3-grid.jpg" alt="Halftone"></figure>
+            <figure class="ph fx-xerox" style="--l:67.5;--t:88;--w:25;--ar:1/1"><img src="img/n3-grid.jpg" alt="Photocopy"></figure>
+            <p class="folio folio--r">17</p>
+          </section>
+
+          <!-- 12 · A PHOTOGRAPH, PHOTOGRAPHED -->
+          <section class="page" aria-label="Page 18">
+            <figure class="ph ph--band" data-fx="bw" style="--t:16;--h:62"><img src="img/n2-gallery.jpg" alt="A framed black and white photograph on a gallery wall"></figure>
+            <p class="folio folio--l">18</p>
+          </section>
+
+          <!-- 19 · full bleed -->
+          <section class="page" aria-label="Page 19">
+            <figure class="ph ph--full" data-fx="film"><img src="img/n5-beach.jpg" alt="Two of us walking down to the beach"></figure>
+            <p class="folio folio--r folio--light">19</p>
+          </section>
+
+          <!-- 14–15 · ACROSS THE SPREAD -->
+          <section class="page" aria-label="Page 20">
+            <figure class="ph ph--full ph--spread-l" data-fx="film"><img src="img/n2-spread.jpg" alt="Rooftops at sunset, with a painted sign on a wall"></figure>
+            <p class="folio folio--l folio--light">20</p>
+          </section>
+
+          <section class="page" aria-label="Page 21">
+            <figure class="ph ph--full ph--spread-r date-up" data-fx="film" data-date="'26 9 02"><img src="img/n2-spread.jpg" alt=""></figure>
+            <p class="folio folio--r folio--light">21</p>
+          </section>
+
+          <!-- 16 · BACK COVER -->
+          <section class="page back" data-density="hard" aria-label="Back cover">
+            <div class="back__center">
+              <p class="back__name">ON FILM</p>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+
+    <nav class="controls" id="controls" aria-label="Pages">
+      <button class="controls__btn" id="prev" type="button" aria-label="Previous page">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <p class="controls__label" id="pageLabel" aria-live="polite">Cover</p>
+      <button class="controls__btn" id="next" type="button" aria-label="Next page">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </nav>
+    <p class="hint" id="hint">drag a corner, click a page or use the ← → keys</p>
+  </main>
+
+</div>
+
+<script src="js/effects.js"></script>
+<script src="js/page-flip.browser.js"></script>
+<script src="js/main.js"></script>
+<script src="js/fotolab.js"></script>
+</body>
+</html>

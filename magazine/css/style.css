@@ -1,0 +1,958 @@
+/* =========================================================
+   SOFIA — digital magazine · v3 (minimal, vintage)
+   Pages are 3:4. Inside a page, 1cqw = 1% of the page width,
+   so everything scales with the book.
+   ========================================================= */
+
+:root {
+  --paper: #F7F6F2;
+  --ink: #161616;
+  --ink-soft: #6F6B64;
+
+  /* photo effects — change these to recolour them */
+  --duo-dark: #1B2A6B;      /* duotone: shadows */
+  --duo-light: #E3E9F2;     /* duotone: highlights */
+  --halftone-ink: #2233A3;  /* halftone dots */
+
+  /* the room around the magazine (follows light/dark theme) */
+  --stage: #E7E6E2;
+  --stage-ink: #1B1B1A;
+  --stage-muted: #75716A;
+  --stage-line: rgba(27, 27, 26, 0.14);
+  --btn-bg: #F7F6F2;
+  --btn-ink: #1B1B1A;
+  --focus: #2233A3;
+
+  --text: "Archivo", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --serif: "Instrument Serif", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --stamp: "DSEG7", "Courier New", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --stage: #121212;
+    --stage-ink: #ECEAE6;
+    --stage-muted: #9B978F;
+    --stage-line: rgba(236, 234, 230, 0.14);
+    --btn-bg: #1F1F1E;
+    --btn-ink: #ECEAE6;
+    --focus: #A9B8FF;
+  }
+}
+:root[data-theme="dark"] {
+  --stage: #121212;
+  --stage-ink: #ECEAE6;
+  --stage-muted: #9B978F;
+  --stage-line: rgba(236, 234, 230, 0.14);
+  --btn-bg: #1F1F1E;
+  --btn-ink: #ECEAE6;
+  --focus: #A9B8FF;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--stage);
+  color: var(--stage-ink);
+  font-family: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- app frame ---------- */
+.app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-inline: 16px;
+  overflow: hidden;
+}
+.bar {
+  width: 100%;
+  max-width: 1500px;
+  margin-inline: auto;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 18px 4px;
+}
+.bar__brand {
+  margin: 0;
+  font: 500 13px/1 var(--text);
+  font-stretch: 125%;
+  letter-spacing: 0.34em;
+}
+.bar__brand span {
+  margin-left: 8px;
+  font-stretch: 100%;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--stage-muted);
+}
+.bar__link {
+  font: italic 15px/1 var(--serif);
+  color: var(--stage-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--stage-line);
+  padding-bottom: 2px;
+  white-space: nowrap;
+}
+.bar__link:hover { border-color: currentColor; }
+.bar__link:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+
+/* fills whatever is left, with or without the bar above */
+.viewer {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.bar { flex: 0 0 auto; }
+.stage {
+  display: grid;
+  place-items: center;
+  padding-block: 18px 10px;
+}
+.book-shift { position: relative; }
+.book-shift:not(.is-ready) { visibility: hidden; }
+.book-shift.is-ready { transition: transform 0.8s cubic-bezier(0.3, 0.7, 0.2, 1); }
+.book-shift.is-landscape.is-cover { transform: translateX(-25%); }
+.book-shift.is-landscape.is-back { transform: translateX(25%); }
+
+#book {
+  min-width: 0 !important;
+  touch-action: pan-y pinch-zoom;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding-block: 6px 2px;
+}
+.controls__btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--stage-line);
+  background: var(--btn-bg);
+  color: var(--btn-ink);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, opacity 0.2s;
+}
+.controls__btn svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.controls__btn:hover:not(:disabled) { background: var(--stage-ink); color: var(--stage); }
+.controls__btn:disabled { opacity: 0.3; cursor: default; }
+.controls__btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.controls__label {
+  margin: 0;
+  min-width: 11ch;
+  text-align: center;
+  font: 500 11px/1 var(--text);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+.hint {
+  margin: 0;
+  padding-block: 4px 16px;
+  text-align: center;
+  font: italic 14px/1.2 var(--serif);
+  color: var(--stage-muted);
+  transition: opacity 0.6s;
+}
+.hint.is-hidden { opacity: 0; }
+
+/* =========================================================
+   PAGES
+   ========================================================= */
+.page {
+  display: none; /* the flipbook shows the right ones */
+  overflow: hidden;
+  container-type: inline-size;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.4);
+}
+.page p, .page figure { margin: 0; }
+.page img { display: block; max-width: none; }
+
+/* spine shading + paper grain */
+.page::before,
+.page::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.page::before { z-index: 20; }
+.page.--left::before { background: linear-gradient(to left, rgba(0, 0, 0, 0.14), rgba(0, 0, 0, 0.04) 2.5%, rgba(0, 0, 0, 0) 8%); }
+.page.--right::before { background: linear-gradient(to right, rgba(0, 0, 0, 0.14), rgba(0, 0, 0, 0.04) 2.5%, rgba(0, 0, 0, 0) 8%); }
+.page::after {
+  z-index: 21;
+  background: url("../assets/grain.png") repeat;
+  background-size: 256px;
+  opacity: 0.22;
+}
+
+/* ---------- words (kept tiny) ---------- */
+.cap {
+  position: absolute;
+  z-index: 6;
+  left: calc(var(--l, 6) * 1cqw);
+  top: calc(var(--t) * 1cqw);
+  bottom: calc(var(--b) * 1cqw);
+  font: italic max(9px, 3.4cqw)/1.15 var(--serif);
+}
+.cap--lg { font-size: max(10px, 4.6cqw); }
+.cap--light { color: #fff; text-shadow: 0 0 1.4cqw rgba(0, 0, 0, 0.35); }
+.cap--dark { color: var(--ink); }
+.cap--center { left: 0; right: 0; text-align: center; }
+.cap--right { left: auto; right: 6cqw; text-align: right; }
+
+.tiny {
+  position: absolute;
+  z-index: 6;
+  left: calc(var(--l, 6) * 1cqw);
+  top: calc(var(--t) * 1cqw);
+  font: 500 max(6px, 1.5cqw)/1.3 var(--text);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.folio {
+  position: absolute;
+  z-index: 6;
+  bottom: 4.5cqw;
+  font: 500 max(6px, 1.5cqw)/1 var(--text);
+  letter-spacing: 0.2em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+}
+.folio--l { left: 6cqw; }
+.folio--r { right: 6cqw; }
+/* on photos: always contrasts with what is underneath */
+.folio--light { color: #fff; mix-blend-mode: difference; }
+
+/* =========================================================
+   PHOTOS — position with --l --t --w (% of page width), --ar, --r
+   ========================================================= */
+.ph {
+  position: absolute;
+  z-index: 2;
+  left: calc(var(--l, 0) * 1cqw);
+  top: calc(var(--t, 0) * 1cqw);
+  width: calc(var(--w, 100) * 1cqw);
+  aspect-ratio: var(--ar, 3 / 4);
+  rotate: calc(var(--r, 0) * 1deg);
+}
+.ph--full { inset: 0; width: auto; aspect-ratio: auto; rotate: none; }
+/* a photo bleeding from edge to edge: --t = top, --h = height */
+.ph--band {
+  left: 0;
+  right: 0;
+  width: auto;
+  top: calc(var(--t, 40) * 1cqw);
+  height: calc(var(--h, 52) * 1cqw);
+  aspect-ratio: auto;
+  rotate: none;
+}
+.lift { filter: drop-shadow(0 0.8cqw 1.3cqw rgba(0, 0, 0, 0.22)); }
+
+.frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  isolation: isolate;
+  background: #CFCCC6;
+}
+.frame img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ph--spread-l .frame img { width: 200%; }
+.ph--spread-r .frame img { width: 200%; left: -100%; }
+
+/* grain layer (off unless an effect turns it on) */
+.frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: url("../assets/grain.png") repeat;
+  background-size: 200px;
+  opacity: 0;
+}
+/* colour layer used by some effects */
+.frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ---- shapes ---- */
+.shape-circle { aspect-ratio: 1; }
+.shape-circle .frame { border-radius: 50%; }
+.shape-arch .frame { border-radius: 999px 999px 0 0; }
+
+/* ---- torn paper ---- */
+.edge-torn { filter: drop-shadow(0 0.5cqw 0.9cqw rgba(0, 0, 0, 0.2)); }
+.edge-torn .paper { position: absolute; inset: -1.6cqw; background: #FBFAF6; }
+
+/* ---- fx-grain: just film grain ---- */
+.fx-grain .frame::before { opacity: 0.55; }
+
+/* ---- fx-duo: duotone (duo-red / duo-green for other colours) ---- */
+.fx-duo .frame { background: var(--duo-light); }
+.fx-duo .frame img { filter: grayscale(1) contrast(1.15); mix-blend-mode: multiply; }
+.fx-duo .frame::after { background: var(--duo-dark); mix-blend-mode: screen; }
+.duo-red { --duo-dark: #4B0E14; --duo-light: #F6CFC2; }
+.duo-green { --duo-dark: #0F2E22; --duo-light: #D9EBD4; }
+
+/* ---- fx-xerox: photocopy ---- */
+.fx-xerox .frame { background: #fff; }
+.fx-xerox .frame img { filter: grayscale(1) contrast(2.8) brightness(1.18); }
+.fx-xerox .frame::before { opacity: 1; background-size: 150px; mix-blend-mode: multiply; }
+
+/* ---- fx-halftone: printed dots (size with --dot) ---- */
+.fx-halftone .frame { background: #fff; }
+.fx-halftone .frame::after { background: var(--halftone-ink); mix-blend-mode: lighten; }
+.fx-halftone .ht {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #fff;
+  filter: contrast(40);
+}
+/* maps the photo to 50–100% grey so every tone becomes a dot size */
+.fx-halftone .ht img { filter: grayscale(1) contrast(1.1) invert(1) brightness(0.5) invert(1); }
+.fx-halftone .ht::after {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  rotate: 45deg;
+  background: radial-gradient(closest-side, #808080 0%, #8D8D8D 50%, #AAAAAA 80%, #D2D2D2 100%, #FFFFFF 141%) 0 0 / var(--dot, 1.2cqw) var(--dot, 1.2cqw);
+  mix-blend-mode: multiply;
+}
+
+/* ---- fx-glow: dreamy soft focus ---- */
+.fx-glow .frame .fx-layer { filter: blur(1.8cqw) brightness(1.15) saturate(1.3); mix-blend-mode: screen; opacity: 0.9; }
+
+/* ---- fx-ghost: double image, like a shaky long exposure ---- */
+.fx-ghost .frame .fx-layer { translate: 7% 0; opacity: 0.45; }
+
+/* ---- fx-mirror: left half reflected ---- */
+.fx-mirror .frame img { clip-path: inset(0 49.6% 0 0); }
+.fx-mirror .frame .fx-layer { transform: scaleX(-1); }
+
+/* ---- fx-strips: photo cut into strips (number with data-strips) ---- */
+.fx-strips .frame { overflow: visible; background: none; }
+.fx-strips .strip {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  translate: 0 calc(var(--dy, 0) * 1cqw);
+  clip-path: inset(0 0.35cqw);
+}
+
+/* ---- fx-double: double exposure (second photo with class fx-overlay) ---- */
+.fx-double .frame img:first-child { filter: contrast(1.08); }
+.fx-double .frame .fx-overlay { mix-blend-mode: lighten; filter: contrast(1.1) saturate(1.1); }
+
+
+/* =========================================================
+   VINTAGE (data-fx, drawn by fotolab.js)
+   ========================================================= */
+.frame img { transition: opacity 0.6s ease; }
+.fx-pending .frame { background: #E4E0D8; }
+.lab-on .fx-pending .frame img { opacity: 0; }
+
+/* if the browser can't draw the effect (e.g. page opened from a file), a close CSS look */
+.fx-failed[data-fx="film"] .frame img { filter: sepia(0.25) saturate(0.85) contrast(0.95) brightness(1.03); }
+.fx-failed[data-fx="booth"] .frame img { filter: grayscale(1) sepia(0.75) contrast(0.9) brightness(1.04); }
+.fx-failed[data-fx="bw"] .frame img { filter: grayscale(1) contrast(1.2); }
+.fx-failed[data-fx="dissolve"] .frame img { filter: grayscale(1) contrast(2.2) brightness(1.1); }
+.fx-failed[data-fx="motion"] .frame img { filter: grayscale(1) contrast(1.05) blur(0.3cqw); }
+.fx-failed[data-fx="streak"] .frame img { filter: blur(1cqw) brightness(0.7) saturate(0.6) sepia(0.3); }
+
+/* film date stamp — data-date="'26 9 17" (add class date-v for vertical) */
+.date {
+  position: absolute;
+  z-index: 4;
+  right: 5.5%;
+  bottom: 4.5%;
+  font: max(8px, 2.7cqw)/1 var(--stamp);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  color: #FF9B45;
+  text-shadow: 0 0 0.35cqw rgba(255, 120, 40, 0.95), 0 0 1.4cqw rgba(255, 70, 20, 0.6);
+  mix-blend-mode: screen;
+  opacity: 0.9;
+}
+/* a little higher, so it clears the page number */
+.date--up { bottom: 9%; }
+.date--v {
+  right: auto;
+  left: 4%;
+  bottom: 7%;
+  writing-mode: vertical-rl;
+  rotate: 180deg;
+}
+.date .tick {
+  display: inline-block;
+  width: 0.13em;
+  height: 0.34em;
+  margin-right: 0.2em;
+  vertical-align: 0.62em;
+  background: currentColor;
+  transform: skewX(-12deg);
+  border-radius: 0.04em;
+}
+.date--v .tick { margin: 0 0 0.2em; vertical-align: 0; }
+
+/* old print: cream card, rounded corners, dark edge */
+.ph--print {
+  background: #EFE8DC;
+  border-radius: 1.4cqw;
+  box-shadow: 0.45cqw 0.55cqw 0 rgba(38, 27, 18, 0.88), 0 1.6cqw 3cqw -1.2cqw rgba(0, 0, 0, 0.45);
+}
+.ph--print .frame { inset: 1.3cqw; border-radius: 0.9cqw; }
+
+/* photobooth strip (put 4 .ph inside) */
+.booth-strip {
+  position: absolute;
+  z-index: 2;
+  left: calc(var(--l, 0) * 1cqw);
+  top: calc(var(--t, 0) * 1cqw);
+  width: calc(var(--w, 26) * 1cqw);
+  rotate: calc(var(--r, 0) * 1deg);
+  display: flex;
+  flex-direction: column;
+  gap: 1.3cqw;
+  padding: 1.7cqw 1.7cqw 5cqw;
+  background: linear-gradient(170deg, #F6F1E8, #E9E1D3);
+  box-shadow: 0 1.2cqw 2.6cqw -1cqw rgba(0, 0, 0, 0.42), 0 0 0 0.08cqw rgba(0, 0, 0, 0.06);
+}
+.booth-strip .ph {
+  position: relative;
+  left: auto;
+  top: auto;
+  width: 100%;
+  rotate: none;
+  aspect-ratio: 4 / 5;
+}
+.booth-strip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: url("../assets/grain.png") repeat;
+  background-size: 180px;
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+}
+
+/* =========================================================
+   SPECIFIC PAGES
+   ========================================================= */
+/* a page that goes dark (the night pages) */
+.page--dark { background: #131313; color: #F2F0EB; }
+.page--dark .cap { color: #F2F0EB; }
+.page--dark .tiny { color: #A19C93; }
+
+/* a thin rule, for the editorial furniture */
+.rule {
+  position: absolute;
+  z-index: 6;
+  left: calc(var(--l, 6) * 1cqw);
+  right: calc(var(--rr, 6) * 1cqw);
+  top: calc(var(--t) * 1cqw);
+  height: 1px;
+  background: currentColor;
+  opacity: 0.22;
+}
+
+/* one line, alone on the page */
+.quote {
+  position: absolute;
+  z-index: 6;
+  left: calc(var(--l, 9) * 1cqw);
+  right: calc(var(--rr, 12) * 1cqw);
+  top: calc(var(--t, 40) * 1cqw);
+  margin: 0;
+  font: italic max(13px, 7.4cqw)/1.06 var(--serif);
+  text-wrap: balance;
+}
+.quote__by {
+  position: absolute;
+  z-index: 6;
+  left: calc(var(--l, 9) * 1cqw);
+  top: calc(var(--t, 40) * 1cqw);
+  margin: 0;
+  font: 500 max(6px, 1.5cqw)/1 var(--text);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.cover { background: #222; color: #fff; }
+/* paper cover: type on the page, one band of photograph across it */
+.cover--paper { background: var(--paper); color: var(--ink); }
+.cover--paper .cover__name {
+  top: auto;
+  bottom: 26cqw;
+  left: 6cqw;
+  right: 6cqw;
+  text-align: left;
+  padding-left: 0;
+  font-size: 15.5cqw;
+  font-stretch: 100%;
+  letter-spacing: 0.2em;
+  text-shadow: none;
+}
+.cover__kicker {
+  position: absolute;
+  z-index: 6;
+  top: 7cqw;
+  left: 6cqw;
+  right: 6cqw;
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  font: 500 max(6px, 1.5cqw)/1 var(--text);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.cover__sub {
+  position: absolute;
+  z-index: 6;
+  left: 6cqw;
+  right: 6cqw;
+  bottom: 16cqw;
+  margin: 0;
+  font: italic max(9px, 4.2cqw)/1 var(--serif);
+}
+.cover__edge {
+  position: absolute;
+  z-index: 6;
+  left: 6cqw;
+  right: 6cqw;
+  bottom: 6cqw;
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  font: 500 max(6px, 1.5cqw)/1 var(--text);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.cover__name {
+  position: absolute;
+  z-index: 6;
+  top: 8cqw;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding-left: 0.38em;
+  font: 400 8.4cqw/1 var(--text);
+  font-stretch: 125%;
+  letter-spacing: 0.38em;
+  text-shadow: 0 0 2cqw rgba(0, 0, 0, 0.18);
+}
+.cover__foot {
+  position: absolute;
+  z-index: 6;
+  left: 6cqw;
+  right: 30cqw;
+  bottom: 6cqw;
+  display: flex;
+  gap: 5cqw;
+  align-items: baseline;
+  font: 500 max(6px, 1.6cqw)/1 var(--text);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-shadow: 0 0 1.2cqw rgba(0, 0, 0, 0.25);
+}
+.cover__foot i {
+  font: italic max(9px, 3.6cqw)/1 var(--serif);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.intro { position: absolute; left: 6cqw; bottom: 12cqw; width: 46cqw; }
+.intro .tiny { position: static; }
+.intro__text { margin-top: 1.6cqw; font: italic max(10px, 3.8cqw)/1.15 var(--serif); }
+
+/* the "currently" list — the only page with real words */
+.list {
+  position: absolute;
+  z-index: 6;
+  left: calc(var(--l, 8) * 1cqw);
+  top: calc(var(--t, 20) * 1cqw);
+  width: calc(var(--w, 60) * 1cqw);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.list li {
+  display: flex;
+  align-items: baseline;
+  gap: 2cqw;
+  padding: 2.2cqw 0;
+  border-bottom: 1px solid rgba(22, 22, 22, 0.14);
+  font: italic max(9px, 3.6cqw)/1.15 var(--serif);
+}
+.list li span {
+  flex: 0 0 auto;
+  width: 17cqw;
+  font: 500 max(6px, 1.5cqw)/1 var(--text);
+  font-style: normal;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.back { background: var(--ink); color: var(--paper); }
+.back__center { position: absolute; left: 0; right: 0; top: 58cqw; text-align: center; }
+.back__name {
+  padding-left: 0.38em;
+  font: 400 5cqw/1 var(--text);
+  font-stretch: 125%;
+  letter-spacing: 0.38em;
+}
+.back__center i { display: block; margin-top: 2.4cqw; font: italic max(9px, 3.4cqw)/1.2 var(--serif); }
+.back__center a { color: inherit; text-underline-offset: 0.6cqw; }
+
+@media (prefers-reduced-motion: reduce) {
+  .book-shift.is-ready, .hint { transition: none; }
+}
+
+
+/* =========================================================
+   PHYSICAL BOOK — paper thickness, gutter, sheet in the air
+   ========================================================= */
+
+:root {
+  --floor: rgba(0, 0, 0, 0.34);
+  --stack-face: #EFECE5;
+  --stack-line: rgba(74, 62, 44, 0.22);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --floor: rgba(0, 0, 0, 0.62); }
+}
+:root[data-theme="dark"] { --floor: rgba(0, 0, 0, 0.62); }
+
+/* the book sits on something */
+.book-shift { isolation: isolate; }
+.book-floor {
+  position: absolute;
+  left: 3%;
+  right: 3%;
+  bottom: -1%;
+  height: 3.4%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(56% 100% at 50% 0%, var(--floor), rgba(0, 0, 0, 0) 76%);
+  filter: blur(8px);
+  transition: left 0.8s cubic-bezier(0.3, 0.7, 0.2, 1), right 0.8s cubic-bezier(0.3, 0.7, 0.2, 1);
+}
+/* closed, only half the block holds a page — keep the shadow under it */
+.book-shift.is-landscape.is-cover .book-floor { left: 51%; right: 1%; }
+.book-shift.is-landscape.is-back .book-floor { left: 1%; right: 51%; }
+
+/* the stack of pages still to come (right) and already read (left).
+   --stack-l / --stack-r are set in js from where you are in the magazine. */
+.book-shift::before,
+.book-shift::after {
+  content: "";
+  position: absolute;
+  top: 0.7%;
+  bottom: 0.7%;
+  pointer-events: none;
+  transition: width 0.7s cubic-bezier(0.3, 0.7, 0.2, 1), opacity 0.5s;
+  background:
+    linear-gradient(to right, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.03) 55%, rgba(0, 0, 0, 0.16)),
+    repeating-linear-gradient(to right, var(--stack-line) 0 0.5px, rgba(255, 255, 255, 0) 0.5px 2.6px),
+    var(--stack-face);
+}
+.book-shift::before {
+  right: 100%;
+  width: var(--stack-l, 0px);
+  clip-path: polygon(0 1.1%, 100% 0, 100% 100%, 0 98.9%);
+  filter: drop-shadow(-1px 2px 5px rgba(0, 0, 0, 0.3));
+}
+.book-shift::after {
+  left: 100%;
+  width: var(--stack-r, 0px);
+  clip-path: polygon(0 0, 100% 1.1%, 100% 98.9%, 0 100%);
+  filter: drop-shadow(1px 2px 5px rgba(0, 0, 0, 0.3));
+}
+/* closed: only the fore-edge shows, on the side away from the spine */
+.book-shift.is-cover::before,
+.book-shift.is-back::after { opacity: 0; }
+
+/* ---------- the page itself: cut edges, gutter, worn corner ---------- */
+.page.--left { border-radius: 4px 1px 1px 4px; }
+.page.--right { border-radius: 1px 4px 4px 1px; }
+
+.page.--left::before {
+  background:
+    /* paper bending into the spine (right edge) */
+    linear-gradient(to left, rgba(0, 0, 0, 0.34), rgba(0, 0, 0, 0.15) 1.4%, rgba(0, 0, 0, 0.05) 5%, rgba(0, 0, 0, 0) 16%),
+    /* the little ridge of light where it lifts again */
+    linear-gradient(to left, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0.22) 17%, rgba(255, 255, 255, 0) 32%),
+    /* the cut edge, outside */
+    linear-gradient(to right, rgba(60, 45, 25, 0.12), rgba(60, 45, 25, 0) 2%),
+    /* a corner that has been turned a few hundred times */
+    radial-gradient(85% 60% at 0% 100%, rgba(92, 72, 42, 0.13), rgba(92, 72, 42, 0) 58%);
+}
+.page.--right::before {
+  background:
+    linear-gradient(to right, rgba(0, 0, 0, 0.34), rgba(0, 0, 0, 0.15) 1.4%, rgba(0, 0, 0, 0.05) 5%, rgba(0, 0, 0, 0) 16%),
+    linear-gradient(to right, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0.22) 17%, rgba(255, 255, 255, 0) 32%),
+    linear-gradient(to left, rgba(60, 45, 25, 0.12), rgba(60, 45, 25, 0) 2%),
+    radial-gradient(85% 60% at 100% 100%, rgba(92, 72, 42, 0.13), rgba(92, 72, 42, 0) 58%);
+}
+/* the covers are board, not paper: no gutter shading, no wear */
+.cover::before,
+.back::before { background: none !important; }
+
+/* ---------- a sheet in the air ---------- */
+.sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 22;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+.page.is-turning .sheen { opacity: 1; }
+.page.is-turning::before { opacity: 0.45; }
+.page.is-turning {
+  box-shadow: 0 16px 38px -14px rgba(0, 0, 0, 0.5), 0 2px 6px -3px rgba(0, 0, 0, 0.4);
+}
+/* the sheet is curved: dark where it bends at the spine, light across the belly */
+.page.is-turning.--right .sheen {
+  background:
+    linear-gradient(to right, rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.10) 7%, rgba(0, 0, 0, 0) 22%),
+    linear-gradient(to right, rgba(255, 255, 255, 0) 28%, rgba(255, 255, 255, 0.22) 60%, rgba(255, 255, 255, 0) 88%),
+    linear-gradient(to left, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0) 14%);
+}
+.page.is-turning.--left .sheen {
+  background:
+    linear-gradient(to left, rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.10) 7%, rgba(0, 0, 0, 0) 22%),
+    linear-gradient(to left, rgba(255, 255, 255, 0) 28%, rgba(255, 255, 255, 0.22) 60%, rgba(255, 255, 255, 0) 88%),
+    linear-gradient(to right, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0) 14%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book-shift::before, .book-shift::after, .sheen { transition: none; }
+}
+
+/* on a dark page the ridge of light has to be barely there */
+.page--dark.--left::before {
+  background:
+    linear-gradient(to left, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.2) 1.4%, rgba(0, 0, 0, 0.06) 5%, rgba(0, 0, 0, 0) 16%),
+    linear-gradient(to left, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0.07) 17%, rgba(255, 255, 255, 0) 32%);
+}
+.page--dark.--right::before {
+  background:
+    linear-gradient(to right, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.2) 1.4%, rgba(0, 0, 0, 0.06) 5%, rgba(0, 0, 0, 0) 16%),
+    linear-gradient(to right, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0.07) 17%, rgba(255, 255, 255, 0) 32%);
+}
+.page--dark.is-turning .sheen { opacity: 0.55; }
+
+/* ---------- the technical page: dry type, hairlines, no photographs ---------- */
+.spec {
+  position: absolute;
+  z-index: 6;
+  left: calc(var(--l, 6) * 1cqw);
+  right: calc(var(--rr, 6) * 1cqw);
+  top: calc(var(--t, 24) * 1cqw);
+}
+.spec .spec__head {
+  margin: 4.2cqw 0 1.1cqw;
+  font: 500 max(6px, 1.5cqw)/1 var(--text);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.spec .spec__head:first-child { margin-top: 0; }
+.spec ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.spec li {
+  display: flex;
+  align-items: baseline;
+  gap: 2cqw;
+  padding: 1cqw 0;
+  border-top: 1px solid rgba(22, 22, 22, 0.12);
+  font: 400 max(7px, 2.35cqw)/1.15 var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.spec li span {
+  flex: 0 0 auto;
+  width: 26cqw;
+  font-size: max(6px, 1.5cqw);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.spec__foot {
+  position: absolute;
+  z-index: 6;
+  left: calc(var(--l, 6) * 1cqw);
+  right: calc(var(--rr, 6) * 1cqw);
+  top: calc(var(--t, 116) * 1cqw);
+  font: 400 max(6px, 1.5cqw)/1.5 var(--text);
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+
+/* ---------- moving pictures: a clip sitting in a photo frame ---------- */
+.frame video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #14130F;
+}
+
+/* =========================================================
+   MINIMAL CHAPTERS — type, grid, measurement. No tilt.
+   ========================================================= */
+
+/* contents: a page of nothing but type */
+.toc {
+  position: absolute;
+  z-index: 6;
+  left: calc(var(--l, 8) * 1cqw);
+  right: calc(var(--rr, 8) * 1cqw);
+  top: calc(var(--t, 28) * 1cqw);
+}
+.toc ul { margin: 0; padding: 0; list-style: none; }
+.toc li {
+  display: flex;
+  align-items: baseline;
+  gap: 3cqw;
+  padding: 1.9cqw 0;
+  border-top: 1px solid rgba(22, 22, 22, 0.12);
+  font: italic max(9px, 3.5cqw)/1.1 var(--serif);
+}
+.toc li:last-child { border-bottom: 1px solid rgba(22, 22, 22, 0.12); }
+.toc li span {
+  flex: 0 0 auto;
+  width: 8cqw;
+  font: 500 max(6px, 1.5cqw)/1 var(--text);
+  font-style: normal;
+  letter-spacing: 0.2em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+}
+
+/* a strict grid — equal, square, straight */
+.grid2 {
+  position: absolute;
+  z-index: 2;
+  left: calc(var(--l, 8) * 1cqw);
+  right: calc(var(--rr, 8) * 1cqw);
+  top: calc(var(--t, 20) * 1cqw);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(var(--g, 3) * 1cqw);
+}
+.grid2 .ph {
+  position: relative;
+  left: auto;
+  top: auto;
+  width: 100%;
+  rotate: none;
+  aspect-ratio: 1;
+}
+.grid2__keys {
+  position: absolute;
+  z-index: 6;
+  left: calc(var(--l, 8) * 1cqw);
+  right: calc(var(--rr, 8) * 1cqw);
+  top: calc(var(--t, 20) * 1cqw);
+  display: flex;
+  justify-content: space-between;
+  font: 500 max(6px, 1.5cqw)/1 var(--text);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* the colours, measured off the photographs */
+.chart {
+  position: absolute;
+  z-index: 6;
+  left: calc(var(--l, 8) * 1cqw);
+  right: calc(var(--rr, 8) * 1cqw);
+  top: calc(var(--t, 26) * 1cqw);
+}
+.chart > div {
+  display: flex;
+  align-items: center;
+  gap: 3cqw;
+  padding: 1.5cqw 0;
+  border-top: 1px solid rgba(22, 22, 22, 0.12);
+}
+.chart > div:last-child { border-bottom: 1px solid rgba(22, 22, 22, 0.12); }
+.chart i {
+  flex: 0 0 auto;
+  width: 26cqw;
+  height: 9.5cqw;
+  background: var(--c);
+  display: block;
+}
+.chart b {
+  flex: 0 0 auto;
+  width: 17cqw;
+  font: 500 max(6px, 1.6cqw)/1 var(--text);
+  letter-spacing: 0.14em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.chart em {
+  font: italic max(8px, 2.7cqw)/1.15 var(--serif);
+  color: var(--ink);
+}
+
+/* colour chart, pushed off the right edge */
+.chart--bleed > div { flex-direction: row-reverse; justify-content: flex-end; }
+.chart--bleed i { width: 46cqw; }
+.chart--bleed em { margin-right: auto; }
